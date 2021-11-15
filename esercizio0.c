@@ -4,7 +4,7 @@
 int main(int argc, char *argv []) {
 int anni;
 printf ("Forse...(numero parametri: %d) %s\n", argc, argv[0]);
-if (argc>1) printf (Primo argomento utente: %s\n", argv[1]);
+if (argc>1) printf(Primo argomento utente: %s\n", argv[1]);
 if (argc>2) {
     anni = atoi(argv[2]);
     if (anni !=0)
