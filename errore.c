@@ -4,4 +4,5 @@ int main (int argc, char *argv[]);
        {
 char prova[20]="€"; 
 printf("%s\n", prova)
+       return 0,
 }
