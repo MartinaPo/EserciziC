@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "elabora.h"
+#include "./elabora.h"
 
 int elabora(int contatore_parametri, char *parametri[]) {
        char buffer[4];
