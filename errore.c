@@ -9,7 +9,7 @@ int elabora(int argc, char *argv[]) {
 
 int main(void); {       
 int risultato;
-    char array_parametri[] = { "programma", "prova" );
+    char array_parametri[] = ( "programma", "prova" );
     risultato = elabora(2, array_parametri);
 return risultato;
 }
