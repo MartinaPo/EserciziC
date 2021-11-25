@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static union { char c[8]; unsigned long a_long; } test = { { 'l', '?', '?', '?', '?', '?', '?', 'b' } };
+static union { char c[4]; unsigned long a_long; } test = { { 'l', '?', '?', 'b' } };
 #define ENDIANNESS ((char) test.a_long)
 
 int converti(char *CP);
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 
 int converti(char *CP) {
     char *end;
-    char str[9]       = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    char str[5]       = { 0, 0, 0, 0, 0 };
     unsigned long *b  = (unsigned long *)(str);
     unsigned long i;
     
@@ -33,7 +33,7 @@ int converti(char *CP) {
       printf("[U+0000 -  U+007F] ");   
       *b = i;  
       printf("UTF-8:       %2.2lX ", *b);
-      if (sizeof(long)==8) {
+      if (sizeof(long)==4) {
         if (ENDIANNESS == 'l') inverti(str);  
         printf("'%s'\n", &(str[sizeof(long)-1]));
       } else printf("\n");  
@@ -41,9 +41,35 @@ int converti(char *CP) {
       printf("[U+0080 -  U+07FF] ");   
       *b = (((i & 0x07C0) << 2) | (i & 0x003F)) | 0xC080;  
       printf("UTF-8:     %4.4lX ", *b);
-      if (sizeof(long)==8) {
+      if (sizeof(long)==4) {
         if (ENDIANNESS == 'l') inverti(str);  
         printf("'%s'\n", &(str[sizeof(long)-2]));
+      } else printf("\n");  
+    } else if (i <= 65535) {
+      printf("[U+0800 -  U+FFFF] ");   
+      *b = (((i & 0xF000) << 4) | ((i & 0x0FC0) << 2) | (i & 0x003F)) | 0xE08080;  
+      printf("UTF-8:   %6.6lX ", *b);
+      if (sizeof(long)==4) {
+        if (ENDIANNESS == 'l') inverti(str);  
+        printf("'%s'\n", &(str[sizeof(long)-3]));
+      } else printf("\n");  
+    } else {
+      printf("[U+10000-U+10FFFF] ");   
+      *b = (((i & 0x03F000) << 4) | ((i & 0x0FC0) << 2) | (i & 0x003F)) | 0xF0808080;  
+      printf("UTF-8: %8.8lX ", *b);
+      if (sizeof(long)==4) {
+        if (ENDIANNESS == 'l') inverti(str);  
+        printf("'%s'\n", &(str[sizeof(long)-4]));
+      } else printf("\n");  
+    }
+    return 0; 
+}
+
+void inverti(char *s) {
+  char p;
+  p = s[0]; s[0] = s[3]; s[3] = p;  
+  p = s[1]; s[1] = s[2]; s[2] = p;        
+}
       } else printf("\n");  
     } else if (i <= 65535) {
       printf("[U+0800 -  U+FFFF] ");   
