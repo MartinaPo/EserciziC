@@ -1,6 +1,6 @@
-#INCLUDE "fatt.h"
+#include "fatt.h"
 
-int fatt(int n) { 
-   if (n==1) {return 1;}
-   else {return (n * fatt(n-1));}
+long int fatt(int n) { 
+   if (n==l {return 1;}
+   else {return (n * fatt(n-l));}
  }
