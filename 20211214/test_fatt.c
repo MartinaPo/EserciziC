@@ -22,7 +22,7 @@ if (b == 0) {
      exit(-3);
  }
 
-printf("fatt(%lu) = (%lu)\n", a, fatt(a));
+printf("fatt(%llu) = (%llu)\n", a, fatt(a));
     return 0;
 
 }
